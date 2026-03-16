@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from .models import *
 from django.views import View
 
 
 class IndexView(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'index.html')
+        livros = Livro.objects.all()
+        return render(request, 'index.html', {'livros': livros})
 
 
 class LivrosView(View):
@@ -16,11 +18,6 @@ class LivrosView(View):
     def post(self, request, *args, **kwargs):
         pass
 
-
-class EmprestimoView(View):
-    def get(self, request, *args, **kwargs):
-        reservas = Emprestimo.objects.all()
-        return render(request, 'reserva.html', {'reservas': reservas})
 
 
 class CidadesView(View):
@@ -52,10 +49,6 @@ class GenerosView(View):
         generos = Genero.objects.all()
         return render(request, 'genero.html', {'generos': generos})
     
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views import View
-from django.contrib import messages
-from .models import Livro
 
 
 class DeleteLivroView(View):
@@ -63,5 +56,4 @@ class DeleteLivroView(View):
         livro = Livro.objects.get(id=id)
         livro.delete()
         messages.success(request, 'Livro excluído com sucesso!')  # Mensagem de sucesso
-        return redirect('livros')  # Redireciona para a lista de livros
-
+        return redirect('index')  # Redireciona para a lista de livros
