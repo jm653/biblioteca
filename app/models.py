@@ -1,5 +1,5 @@
+# models.py
 from django.db import models
-
 
 class Cidade(models.Model):
     nome = models.CharField(max_length=100, verbose_name="Nome da cidade")
@@ -15,11 +15,7 @@ class Cidade(models.Model):
 
 class Autor(models.Model):
     nome = models.CharField(max_length=100, verbose_name="Nome do autor")
-    cidade = models.ForeignKey(
-        Cidade,
-        on_delete=models.CASCADE,
-        verbose_name="Cidade do autor"
-    )
+    cidade = models.ForeignKey(Cidade, on_delete=models.CASCADE, verbose_name="Cidade do autor")
 
     def __str__(self):
         return self.nome
@@ -32,11 +28,7 @@ class Autor(models.Model):
 class Editora(models.Model):
     nome = models.CharField(max_length=100, verbose_name="Nome da editora")
     site = models.CharField(max_length=100, verbose_name="Site da editora")
-    cidade = models.ForeignKey(
-        Cidade,
-        on_delete=models.CASCADE,
-        verbose_name="Cidade da editora"
-    )
+    cidade = models.ForeignKey(Cidade, on_delete=models.CASCADE, verbose_name="Cidade da editora")
 
     def __str__(self):
         return self.nome
@@ -49,11 +41,7 @@ class Editora(models.Model):
 class Leitor(models.Model):
     nome = models.CharField(max_length=100, verbose_name="Nome do leitor")
     email = models.CharField(max_length=100, verbose_name="Email do leitor")
-    cpf = models.CharField(
-        max_length=11,
-        unique=True,
-        verbose_name="CPF do leitor"
-    )
+    cpf = models.CharField(max_length=11, unique=True, verbose_name="CPF do leitor")
 
     def __str__(self):
         return self.nome
@@ -76,28 +64,32 @@ class Genero(models.Model):
 
 class Livro(models.Model):
     nome = models.CharField(max_length=100, verbose_name="Nome do livro")
-    autor = models.ForeignKey(
-        Autor,
-        on_delete=models.CASCADE,
-        verbose_name="Autor do livro"
-    )
-    editora = models.ForeignKey(
-        Editora,
-        on_delete=models.CASCADE,
-        verbose_name="Editora do livro"
-    )
-    genero = models.ForeignKey(
-        Genero,
-        on_delete=models.CASCADE,
-        verbose_name="Gênero do livro"
-    )
+    autor = models.ForeignKey(Autor, on_delete=models.CASCADE, verbose_name="Autor do livro")
+    editora = models.ForeignKey(Editora, on_delete=models.CASCADE, verbose_name="Editora do livro")
+    genero = models.ForeignKey(Genero, on_delete=models.CASCADE, verbose_name="Gênero do livro")
     preco = models.IntegerField(verbose_name="Preço do livro")
-    data_pub = models.DateField(verbose_name="Data de publicação do livro")
+    data_plub = models.DateField(verbose_name="Data de publicação do livro")
     status = models.BooleanField(verbose_name="Status do livro")
 
     def __str__(self):
-        return f"{self.nome}, {self.autor}"
+        return f'{self.nome}, {self.autor}'
 
     class Meta:
         verbose_name = "Livro"
         verbose_name_plural = "Livros"
+class Reserva(models.Model):
+    STATUS_CHOICE = (
+        (True, "Devolvido"),
+        (False, "Pendente"),
+    )
+    leitor = models.ForeignKey(Leitor, on_delete = models.CASCADE, verbose_name= "Leitor")
+    livro = models.ForeignKey(Livro, on_delete = models.CASCADE, verbose_name = "Livros" )
+    data_reserva = models.DateField(verbose_name="Data de reserva")
+    data_devolucao = models.DateField(verbose_name="Data de devolução")
+    status_dev = models.BooleanField(choices=STATUS_CHOICE, default = False, verbose_name="Status da devolução")
+    def __str__(self):
+        return f'{self.leitor}, {self.livro}, {self.status_dev}'
+    class Meta:
+        verbose_name = "Reserva"
+        verbose_name_plural = "Reservas"
+        
