@@ -1,0 +1,19 @@
+<div class="container mt-5">
+    <h2>Editoras</h2>
+    
+    <table class="table">
+    <thead>
+    <tr>
+    <th>Nome</th>
+    </tr>
+    </thead>
+    
+    <tbody>
+    {% for editora in editoras %}
+    <tr>
+    <td>{{ editora.nome }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    </div>

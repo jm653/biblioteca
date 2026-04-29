@@ -1,0 +1,19 @@
+<div class="container mt-5">
+    <h2>Cidades</h2>
+    
+    <table class="table">
+    <thead>
+    <tr>
+    <th>Nome</th>
+    </tr>
+    </thead>
+    
+    <tbody>
+    {% for cidade in cidades %}
+    <tr>
+    <td>{{ cidade.nome }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    </div>

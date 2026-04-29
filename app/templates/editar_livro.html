@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Livro</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+
+    <h2 class="mb-4 text-center">✏️ Editar Livro</h2>
+
+    <!-- Mensagens -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <table class="table table-bordered table-hover">
+
+            <thead class="thead-dark">
+                <tr>
+                    <th>Campo</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td><strong>Nome</strong></td>
+                    <td>{{ form.nome }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Autor</strong></td>
+                    <td>{{ form.autor }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Editora</strong></td>
+                    <td>{{ form.editora }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Gênero</strong></td>
+                    <td>{{ form.genero }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Preço</strong></td>
+                    <td>{{ form.preco }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Data de Publicação</strong></td>
+                    <td>{{ form.data_pub }}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Status</strong></td>
+                    <td>{{ form.status }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between">
+            <a href="/" class="btn btn-secondary">⬅ Voltar</a>
+            <button type="submit" class="btn btn-success">💾 Salvar</button>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>
